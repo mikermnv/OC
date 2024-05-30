@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/merged_3-7_OS.pdf
+/lab1/OS_Lab1
