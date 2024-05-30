@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include "SpecialCodes.h"
 #include <Windows.h>
 #include <process.h>
 #include <vector>
@@ -21,10 +22,10 @@ DWORD WINAPI MinMax(LPVOID lpParam) {
 		for (int elem : threadData->array) {
 			if (elem < threadData->min)
 				threadData->min = elem;
-			Sleep(7);
+			Sleep(SLEEP_TIME_MIN);
 			if (elem > threadData->max)
 				threadData->max = elem;
-			Sleep(7);
+			Sleep(SLEEP_TIME_MIN);
 		}
 
 		std::cout << "Min element: " << threadData->min << std::endl;
@@ -46,7 +47,7 @@ DWORD WINAPI AverageThread(LPVOID lpParam) {
 		int sum = 0;
 		for (int elem : threadData->array) {
 			sum += elem;
-			Sleep(12);
+			Sleep(SLEEP_TIME_MAX);
 		}
 
 		threadData->average = static_cast<double>(sum) / static_cast<double>(threadData->array.size());
@@ -104,13 +105,16 @@ int main() {
 	CloseHandle(hThreads[0]);
 	CloseHandle(hThreads[1]);
 
-	for (int i = 0; i < array.size(); i++)
-		if (array[i] == threadData.min || array[i] == threadData.max)
-			array[i] = static_cast<int>(threadData.average);
+	for (auto& elem : array) {
+		if (elem == threadData.min || elem == threadData.max) {
+			elem = static_cast<int>(threadData.average);
+		}
+	}
 
 	std::cout << "New array:\n";
-	for (int i = 0; i < array.size(); i++)
-		std::cout << array[i] << " ";
+	for (auto& elem : array) {
+		std::cout << elem << " ";
+	}
 	std::cout << std::endl;
 
 	return 0;
