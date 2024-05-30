@@ -1,4 +1,5 @@
 #include "Employee.h"
+#include "ErrorCodes.h"
 #include <iostream>
 #include <Windows.h>
 #include <fstream>
@@ -42,17 +43,20 @@ int main() {
 	WaitForSingleObject(piCreator.hProcess, INFINITE);
 	GetExitCodeProcess(piCreator.hProcess, &exit_code);
 	if (exit_code != 0) {
-		if (exit_code == -1) {
+		if (exit_code == ERR_CREATE_BIN_FILE) {
 			std::cerr << "Failed to create binary file." << std::endl;
 		}
-		else if (exit_code == 1) {
+		else if (exit_code == ERR_READ_ID) {
 			std::cerr << "Invalid input for employee ID." << std::endl;
 		}
-		else if (exit_code == 2){
+		else if (exit_code == ERR_READ_NAME){
 			std::cerr << "Invalid input for employee name." << std::endl;
 		}
-		else if (exit_code == 3) {
+		else if (exit_code == ERR_READ_HOURS) {
 			std::cerr << "Invalid input for employee hours." << std::endl;
+		}
+		else if (exit_code == ERR_EMPLOYEE_NUM) {
+			std::cerr << "Invalid input number of employees." << std::endl;
 		}
 		else {
 			std::cerr <<"Error in creator.exe" << std::endl;
@@ -111,13 +115,13 @@ int main() {
 	WaitForSingleObject(piReporter.hProcess, INFINITE);
 	GetExitCodeProcess(piReporter.hProcess, &exit_code);
 	if (exit_code != 0) {
-		if (exit_code == 4) {
+		if (exit_code == ERR_OPEN_INPUT_FILE) {
 			std::cerr << "Failed to open input binary file." << std::endl;
 		}
-		else if (exit_code == 5) {
+		else if (exit_code == ERR_CREATE_OUTPUT_FILE) {
 			std::cerr << "Failed to create output text file." << std::endl;
 		}
-		else if (exit_code == 6) {
+		else if (exit_code == ERR_INVALID_SALARY_PER_HOUR) {
 			std::cerr << "Invalid value for salary per hour." << std::endl;
 		}
 		else {

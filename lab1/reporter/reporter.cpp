@@ -1,4 +1,5 @@
 #include "Employee.h"
+#include "ErrorCodes.h"
 #include <iostream>
 #include <fstream>
 
@@ -11,19 +12,19 @@ int main(int argc, char* argv[]) {
 		if (!binFile)
 		{
 			std::cerr << "Failed to open input binary file." << std::endl;
-			throw 4;
+			throw ERR_OPEN_INPUT_FILE;
 		}
 		std::string txtFileName = argv[2];
 		txtFile.open("..\\OS_Lab1\\" + txtFileName);
 		if (!txtFile)
 		{
 			std::cerr << "Failed to create output text file." << std::endl;
-			throw 5;
+			throw ERR_CREATE_OUTPUT_FILE;
 		}
 		double salaryPerHour = atof(argv[3]);
 		if (salaryPerHour <= 0) {
 			std::cerr << "Invalid value for salary per hour." << std::endl;
-			throw 6;
+			throw ERR_INVALID_SALARY_PER_HOUR;
 		}
 
 			txtFile << "Report on file \"" << fileName << "\"\n";
@@ -49,7 +50,6 @@ int main(int argc, char* argv[]) {
 		std::cerr << "Unknown error" << std::endl;
 		binFile.close();
 		txtFile.close();
-		return -2;
+		return ERR_UNKNOWN_ERROR;
 	}
-	return 0;
 }
