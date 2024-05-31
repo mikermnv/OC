@@ -128,9 +128,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="OS_lab2.cpp" />
+    <ClCompile Include="ThreadFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SpecialCodes.h" />
+    <ClInclude Include="ThreadData.h" />
+    <ClInclude Include="ThreadFunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
