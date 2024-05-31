@@ -3,16 +3,9 @@
 #include <string.h>
 #include <vector>
 #include <algorithm>
+#include "Params.h"
 
-struct Params {
-    int* array;
-    int thread_id;
-    int array_size;
-    HANDLE hEndWorkEvent; //individual
-    HANDLE hCannotWorkEvent; //individual
-    HANDLE hContinueEvent; //individual
-    CRITICAL_SECTION* cs;
-};
+
 
 DWORD WINAPI marker(LPVOID param) {
     Params* parametr = (Params*)param;
