@@ -1,5 +1,5 @@
 # Operating Systems
-## [Task1](OS/lab1)
+## [Task1](lab1)
 This project creates a console program and two utility programs that interact to generate a binary file of employee data and a text report containing the employee details and calculated salaries. The main program coordinates the execution of the utility programs to perform these tasks.
 ## Task2
 The program creates three threads: main, min_max, and average. The main thread creates an array of integers, launches the min_max and average threads, waits for their completion, replaces the maximum and minimum elements of the array with the average value, and outputs the results to the console. The min_max and average threads find the minimum, maximum, and average elements of the array with periodic "sleeping".
