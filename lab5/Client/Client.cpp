@@ -173,7 +173,7 @@ int main(int argc, char** argv)
 
 			Send((char*)request.c_str(), hPipe);
 
-			char* response = new char[100];
+			char* response = new char[100];;
 			Receive(response, hPipe);
 			std::cout << "Server responded: " << response << "\n";
 			break;

@@ -83,7 +83,7 @@ Employee Read_Block(int i, int ID, std::string filename, std::vector<bool>* isRe
 	}
 
 	if (readers_counters[i] == 1)
-		WaitForSingleObject(hModifyResourceMutex[i], INFINITE); //wait to read and do not let to write
+		WaitForSingleObject(hModifyResourceMutex[i], INFINITE); // Wait to read and do not let to write
 	ReleaseMutex(hModifyCounterMutex[i]);
 	std::ifstream fin;
 	fin.open(filename);
@@ -104,10 +104,9 @@ void Read_Release(int i, std::vector<bool>* isReading)
 		(*isReading)[i] = false;
 	}
 	if (readers_counters[i] == 0)
-		ReleaseMutex(hModifyResourceMutex[i]); //let writers write
+		ReleaseMutex(hModifyResourceMutex[i]); // Let writers write
 	ReleaseMutex(hModifyCounterMutex[i]);
 }
-
 
 int main() {
 
@@ -171,7 +170,7 @@ int main() {
 
 	in.seekg(0);
 
-	//Initialize mutex
+	// Initialize mutex
 
 	for (size_t i = 0; i < amountOfRecords; i++)
 	{
@@ -186,7 +185,7 @@ int main() {
 			NULL));
 	}
 
-	//Client Server
+	// Client Server
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
 
@@ -266,8 +265,6 @@ int main() {
 
 		if (fConnected)
 		{
-			//std::cout << "Connected to pipe :" << i + 1 <<"\n";
-
 			hThread = CreateThread(
 				NULL,              // no security attribute 
 				0,                 // default stack size 
@@ -275,23 +272,17 @@ int main() {
 				(LPVOID)params,    // thread parameter 
 				0,                 // not suspended 
 				&dwThreadId);      // returns thread ID 
-			//std::cout << "\n" << params->hpipe << "\n";
-			//std::cout << "\n" << params << "\n";
 		}
 		else {
 			std::cout << "Could not connect";
 			// The client could not connect, so close the pipe. 
 			CloseHandle(hPipe);
 		}
+		while (true) {
+
+		}
+		return 0;
 	}
-
-
-	while (true)
-	{
-
-	}
-
-	return 0;
 }
 
 DWORD WINAPI InstanceThread(LPVOID lpvParam)
@@ -301,18 +292,14 @@ DWORD WINAPI InstanceThread(LPVOID lpvParam)
 // of this procedure to run concurrently, depending on the number of incoming
 // client connections.
 {
-	//std::cout << GetLastError();
-	//HANDLE hHeap = GetProcessHeap();
-	//TCHAR* pchRequest = (TCHAR*)HeapAlloc(hHeap, 0, BUFSIZE * sizeof(TCHAR));
-	//TCHAR* pchReply = (TCHAR*)HeapAlloc(hHeap, 0, BUFSIZE * sizeof(TCHAR));
 	char buf_req[100];
 
 	DWORD cbBytesRead = 0, cbReplyBytes = 0, cbWritten = 0;
 	BOOL fSuccess = FALSE;
 	HANDLE hPipe = NULL;
 
-	//// Do some extra error checking since the app will keep running even if this
-	//// thread fails.
+	// Do some extra error checking since the app will keep running even if this
+	// thread fails.
 
 	//if (lpvParam == NULL)
 	//{
@@ -342,10 +329,10 @@ DWORD WINAPI InstanceThread(LPVOID lpvParam)
 	//	return (DWORD)-1;
 	//}
 
-	//// Print verbose messages. In production code, this should be for debugging only.
+	// Print verbose messages. In production code, this should be for debugging only.
 	//printf("InstanceThread created, receiving and processing messages.\n");
 
-	//// The thread's parameter is a handle to a pipe object instance. 
+	// The thread's parameter is a handle to a pipe object instance. 
 
 	hPipe = ((ThreadParams*)lpvParam)->hpipe;
 	std::string filename = ((ThreadParams*)lpvParam)->filename;
@@ -360,7 +347,6 @@ DWORD WINAPI InstanceThread(LPVOID lpvParam)
 		isReading.push_back(false);
 		isWriting.push_back(false);
 	}
-	//bool isReading = false;
 
 	std::ofstream fout;
 	fout.open(filename, std::ofstream::binary | std::ofstream::app);
@@ -370,7 +356,7 @@ DWORD WINAPI InstanceThread(LPVOID lpvParam)
 	{
 		// Read client requests from the pipe. This simplistic code only allows messages
 		// up to BUFSIZE characters in length.
-		//std::cout << "\n reading from pipe " << hPipe << "\n";
+		// std::cout << "\n reading from pipe " << hPipe << "\n";
 		fSuccess = ReadFile(
 			hPipe,        // handle to pipe 
 			buf_req,    // buffer to receive data 
@@ -404,10 +390,7 @@ DWORD WINAPI InstanceThread(LPVOID lpvParam)
 	DisconnectNamedPipe(hPipe);
 	CloseHandle(hPipe);
 
-	/*HeapFree(hHeap, 0, pchRequest);
-	HeapFree(hHeap, 0, pchReply);*/
 	std::cout << "End of work with client: " << clientId << "\n";
-	//printf("InstanceThread exiting.\n");
 	return 1;
 }
 
@@ -486,7 +469,6 @@ VOID ProcessRequest(char* request, HANDLE hPipe, std::string filename, int clien
 			return;
 		}
 		Read_Release(id, isReading);
-		//snprintf(buf, strlen(buf), release_read, id);
 		std::cout << "For client " << clientID << " request: \"" << request << "\" sending response: " << ok << "\n";
 		Send((char*)ok, hPipe);
 	}
