@@ -7,6 +7,7 @@
 #include <vector>
 
 #define MAX_LENGTH 20
+#define LENGTH 1000
 
 int main()
 {
@@ -61,7 +62,7 @@ int main()
             FALSE,
             NULL);
 
-        wchar_t buffer[1000];
+        wchar_t buffer[LENGTH];
 
         wsprintfW(buffer, L"Sender.exe %d %s %d %d", i, wfilename, hReady, hMutexFile);
 
@@ -86,7 +87,7 @@ int main()
         hReadies.push_back(hReady);
     }
 
-    //waiting when senders are ready
+    // Waiting when senders are ready
     int result = 0;
     WaitForMultipleObjects(senders, &hReadies[0], TRUE, INFINITE);
     fin.close();

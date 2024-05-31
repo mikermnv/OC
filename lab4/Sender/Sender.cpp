@@ -9,7 +9,6 @@ int main(int argc, char** argv)
 {
 	std::cout << "Hi, I am sender " << std::stoi(argv[1]) << '\n';
 
-
 	HANDLE hIAmReady = (HANDLE)std::stoi(argv[3]);
 	HANDLE hMutexFile = (HANDLE)std::stoi(argv[4]);
 
