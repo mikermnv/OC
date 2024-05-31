@@ -1,0 +1,11 @@
+# Operating Systems
+## Task1
+This project creates a console program and two utility programs that interact to generate a binary file of employee data and a text report containing the employee details and calculated salaries. The main program coordinates the execution of the utility programs to perform these tasks.
+## Task2
+The program creates three threads: main, min_max, and average. The main thread creates an array of integers, launches the min_max and average threads, waits for their completion, replaces the maximum and minimum elements of the array with the average value, and outputs the results to the console. The min_max and average threads find the minimum, maximum, and average elements of the array with periodic "sleeping".
+## Task3
+The program consists of the main thread and several instances of the marker thread. The main thread allocates an array of integers, launches the specified number of marker threads, signals their start, and then enters a loop of waiting for the marker threads to signal they cannot continue, displaying the array, terminating one marker thread, and signaling the remaining marker threads to continue. The marker threads generate random numbers, attempt to mark array elements with their ID, and signal the main thread if they cannot proceed, waiting for the main thread's signal to continue or terminate.
+## Task4
+The program consists of one Receiver process and multiple Sender processes. Sender processes send messages to the Receiver through a shared binary file. The Receiver gets the file details, creates the file, launches the Sender processes, and then cyclically reads messages from the file or terminates based on console input. The Senders open the file, signal readiness, and cyclically send messages or terminate based on console input. The message transfer is organized as a FIFO queue.
+## Task5
+The program consists of a server process and multiple client processes. The server creates a binary file with employee records, launches the client processes, and handles their requests to modify or read records, blocking access as needed. The clients cyclically request to modify or read records, accessing them by employee ID. After all clients finish, the server displays the modified file and terminates upon a console command.
